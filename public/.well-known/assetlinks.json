@@ -1,0 +1,13 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.example.expoDeepLink",
+        "sha256_cert_fingerprints": [
+          "AD:C6:20:F3:FA:3B:94:16:6A:FF:CE:52:33:13:38:0D:2B:0E:6E:78:2B:D3:02:F4:D1:0D:9C:B3:98:14:07:22"
+        ]
+      }
+    }
+  ]
+  
