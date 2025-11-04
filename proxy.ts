@@ -8,9 +8,7 @@ export function proxy(req: NextRequest) {
   const shouldHandle = supportedPaths.some((path) => pathname.startsWith(path));
   if (!shouldHandle) return NextResponse.next();
 
-  const appScheme = `https://deeplink-app-blush.vercel.app${pathname}${req.nextUrl.search}`;
-
-  console.log(appScheme);
+  const appLink = `https://deeplink-app-blush.vercel.app${pathname}${req.nextUrl.search}`;
 
   const fallbackUrl =
     "https://play.google.com/store/apps/details?id=com.instagram.android";
@@ -21,7 +19,7 @@ export function proxy(req: NextRequest) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script>
-          window.location.href = "${appScheme}";
+          window.location.href = "${appLink}";
           
           setTimeout(() => {
             window.location.replace("${fallbackUrl}");
