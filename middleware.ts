@@ -2,32 +2,31 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  console.log("🔥 Middleware triggered for:", req.nextUrl.pathname);
+  const { pathname, search } = req.nextUrl;
+  const supportedPaths = ["/profile"];
 
-  const url = req.nextUrl.clone();
-  const pathname = url.pathname;
-
-  const supportedPaths = ["/profile", "/competition", "/reward"];
   const shouldRedirect = supportedPaths.some((path) =>
     pathname.startsWith(path)
   );
 
   if (shouldRedirect) {
-    const appScheme = `com.example.expoDeepLink://deeplink${pathname}${url.search}`;
-    const fallbackUrl = `https://play.google.com/store/apps/details?id=com.instagram.android`;
+    const appScheme = `com.example.expoDeepLink://deeplink${pathname}${search}`;
+    const fallbackUrl =
+      "https://play.google.com/store/apps/details?id=com.instagram.android";
 
     const html = `
+      <!DOCTYPE html>
       <html>
         <head>
-          <meta http-equiv="refresh" content="1.5; url='${fallbackUrl}'" />
+          <meta name="viewport" content="width=device-width,initial-scale=1">
           <script>
-            window.location.replace("${appScheme}");
+            window.location.href = "${appScheme}";
             setTimeout(() => {
               window.location.replace("${fallbackUrl}");
-            }, 1500);
+            }, 1000);
           </script>
         </head>
-        <body>Redirecting...</body>
+        <body></body>
       </html>
     `;
 
@@ -40,5 +39,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/competition/:path*", "/reward/:path*"],
+  matcher: ["/profile/:path*"],
 };
