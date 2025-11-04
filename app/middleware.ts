@@ -1,48 +1,44 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const SUPPORTED_ROUTES = ["/profile"];
+export function middleware(req: NextRequest) {
+  console.log("🔥 Middleware triggered for:", req.nextUrl.pathname);
 
-export function middleware(request: NextRequest) {
-  const { pathname, search } = request.nextUrl;
+  const url = req.nextUrl.clone();
+  const pathname = url.pathname;
 
-  const matchedRoute = SUPPORTED_ROUTES.find((route) =>
-    pathname.startsWith(route)
+  const supportedPaths = ["/profile", "/competition", "/reward"];
+  const shouldRedirect = supportedPaths.some((path) =>
+    pathname.startsWith(path)
   );
 
-  if (matchedRoute) {
-    const deepLink = `com.example.expoDeepLink://deeplink${pathname}${search}`;
-
-    const fallback =
-      "https://play.google.com/store/apps/details?id=com.instagram.android";
+  if (shouldRedirect) {
+    const appScheme = `com.example.expoDeepLink://deeplink${pathname}${url.search}`;
+    const fallbackUrl = `https://play.google.com/store/apps/details?id=com.instagram.android`;
 
     const html = `
-      <!DOCTYPE html>
-      <html lang="en">
+      <html>
         <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <meta http-equiv="refresh" content="0; url=${deepLink}" />
-          <title>Opening App...</title>
+          <meta http-equiv="refresh" content="1.5; url='${fallbackUrl}'" />
           <script>
+            window.location.replace("${appScheme}");
             setTimeout(() => {
-              window.location.href = "${fallback}";
+              window.location.replace("${fallbackUrl}");
             }, 1500);
           </script>
         </head>
-        <body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-          <p>Redirecting to app…</p>
-          <a href="${deepLink}">Tap here if it doesn’t open automatically</a>
-        </body>
+        <body>Redirecting...</body>
       </html>
     `;
 
-    return new NextResponse(html, { headers: { "Content-Type": "text/html" } });
+    return new NextResponse(html, {
+      headers: { "Content-Type": "text/html" },
+    });
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/profile/:path*"],
+  matcher: ["/profile/:path*", "/competition/:path*", "/reward/:path*"],
 };
