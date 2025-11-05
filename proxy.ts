@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
-  const supportedPaths = ["/profile"];
+  const supportedPaths = ["/competition", "/submission"];
 
   const shouldHandle = supportedPaths.some((path) => pathname.startsWith(path));
   if (!shouldHandle) return NextResponse.next();
@@ -32,5 +32,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile/:path*"],
+  matcher: ["/competition/:path*", "/submission/:path*"],
 };
