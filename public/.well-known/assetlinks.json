@@ -1,13 +1,11 @@
 [
-    {
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "com.talenzap.mobileapp",
-        "sha256_cert_fingerprints": [
-          "69:16:AB:47:C2:73:2B:6C:67:24:D4:95:03:20:30:B6:1A:6D:6C:7F:68:47:2E:15:1F:9B:4A:89:1E:89:C7:C7"
-        ]
-      }
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.talenzap.mobileapp",
+      "sha256_cert_fingerprints":
+        ["B6:0B:DF:3D:1C:8F:8E:E5:BF:98:A7:44:59:8B:F1:CA:3B:7D:47:C4:93:96:05:22:90:40:7B:71:B5:A9:EA:A6"]
     }
-  ]
-  
+  }
+]
