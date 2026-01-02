@@ -14,9 +14,10 @@ const nextConfig: NextConfig = {
       {
         source: "/.well-known/apple-app-site-association",
         headers: [
-          { key: "Content-Type", value: "application/json" },
-          { key: "Access-Control-Allow-Origin", value: "*" },
-          { key: "Cache-Control", value: "no-cache" },
+          {
+            key: "Content-Type",
+            value: "application/json",
+          },
         ],
       },
     ];
